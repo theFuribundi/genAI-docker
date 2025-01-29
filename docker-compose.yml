@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  ollama:
+    build: ./ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # if you don't have nvidia gpu, comment the lines above
+
+  langchain:
+    build: ./langchain
+    ports:
+      - "8000:8000"  # Expose if needed
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=ollama:11434
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:cuda # Or ghcr.io/open-webui/open-webui:main for CPU-only
+    # build: ./open-webui # No longer necessary since we're using a pre-built image
+    ports:
+      - "3000:8080" # Map host port 3000 to container port 8080
+    depends_on:
+      - ollama
+    environment:
+      - 'OLLAMA_API_BASE_URL=http://ollama:11434/api'
+      - 'WEBUI_SECRET_KEY=YOUR_SECRET_KEY' # Add a secret key for security
+    volumes:
+      - open-webui:/app/backend/data  # Mount a volume for data persistence
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all  # Or 1 if you only want to use 1 GPU
+              capabilities: [gpu]
+    # if you don't have nvidia gpu, comment the lines above
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  ollama: # your Ollama volume
+  open-webui: # Volume for Open WebUI data
