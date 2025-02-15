@@ -6,14 +6,15 @@ This project is a Dockerized application that demonstrates how to set up a multi
 
 ```
 docker-project
-├── src
-│   └── app
-│       └── main.js
+├── langchain
+│   ├── Dockerfile
+│   └── requirements.txt
+├── ollama
+│   └── Dockerfile
+├── open-webui
+│   └── Dockerfile
 ├── .dockerignore
-├── .gitignore
 ├── docker-compose.yml
-├── Dockerfile
-├── package.json
 └── README.md
 ```
 
