@@ -1,11 +1,11 @@
-# docker-project
+# genAI-docker
 
-This project is a Dockerized application that demonstrates how to set up a multi-container environment using Docker and Docker Compose.
+Multi-container docker application for local AI development.
 
 ## Project Structure
 
 ```
-docker-project
+genAI-docker
 ├── langchain
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -31,11 +31,11 @@ To get a copy of this project up and running on your local machine, follow these
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/docker-project.git
+   git clone https://github.com/theFuribundi/genAI-docker.git
    ```
 2. Navigate to the project directory:
    ```
-   cd docker-project
+   cd genAI-docker
    ```
 
 ### Running the Application
